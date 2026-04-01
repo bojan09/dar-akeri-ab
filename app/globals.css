@@ -1,0 +1,320 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────
+   BASE LAYER — Typography, resets, CSS vars
+───────────────────────────────────────────── */
+@layer base {
+  :root {
+    --brand-navy: #1A1F71;
+    --brand-navy-dark: #12166A;
+    --brand-navy-light: #252B8A;
+    --brand-orange: #FF6B35;
+    --brand-orange-dark: #E55A24;
+    --surface: #F8F9FC;
+    --surface-secondary: #EEF0F8;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    border-color: theme("colors.gray.200");
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-surface text-gray-900 font-sans;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+
+  ::selection {
+    @apply bg-brand-orange/20 text-brand-navy;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-orange ring-offset-2;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-surface-secondary;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-brand-navy/30 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand-navy/50;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   COMPONENTS LAYER — Reusable component classes
+───────────────────────────────────────────── */
+@layer components {
+
+  /* Container */
+  .container-site {
+    @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl w-full;
+  }
+
+  /* Section wrapper */
+  .section-wrapper {
+    @apply py-section-sm lg:py-section;
+  }
+
+  /* Section heading block */
+  .section-label {
+    @apply inline-flex items-center gap-2 text-brand-orange font-display text-sm font-bold uppercase tracking-widest mb-4;
+  }
+  .section-label::before {
+    content: '';
+    @apply block w-6 h-0.5 bg-brand-orange;
+  }
+
+  .section-title {
+    @apply text-display-md font-display font-black text-brand-navy leading-tight;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-text-muted font-sans leading-relaxed max-w-2xl;
+  }
+
+  /* Card base */
+  .card-base {
+    @apply bg-white rounded-3xl shadow-card border border-gray-100/60 transition-all duration-300 ease-out-expo;
+  }
+  .card-base:hover {
+    @apply shadow-card-hover -translate-y-1;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-brand-orange text-white font-sans font-semibold
+           px-7 py-3.5 rounded-2xl
+           shadow-cta hover:shadow-cta-hover
+           hover:bg-brand-orange-dark
+           active:scale-[0.98]
+           transition-all duration-200 ease-out-expo
+           select-none cursor-pointer;
+  }
+
+  /* Secondary button */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-white text-brand-navy font-sans font-semibold
+           px-7 py-3.5 rounded-2xl border-2 border-brand-navy/10
+           hover:border-brand-navy/30 hover:bg-surface
+           active:scale-[0.98]
+           transition-all duration-200 ease-out-expo
+           select-none cursor-pointer;
+  }
+
+  /* Ghost button (for dark backgrounds) */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           bg-white/10 text-white font-sans font-semibold
+           px-7 py-3.5 rounded-2xl border border-white/20
+           hover:bg-white/20 hover:border-white/40
+           backdrop-blur-sm
+           active:scale-[0.98]
+           transition-all duration-200 ease-out-expo
+           select-none cursor-pointer;
+  }
+
+  /* Icon button */
+  .btn-icon {
+    @apply inline-flex items-center justify-center
+           w-11 h-11 rounded-2xl
+           bg-surface-secondary text-brand-navy
+           hover:bg-brand-navy hover:text-white
+           transition-all duration-200 ease-out-expo
+           cursor-pointer;
+  }
+
+  /* Badge / chip */
+  .badge {
+    @apply inline-flex items-center gap-1.5
+           text-xs font-display font-bold uppercase tracking-wider
+           px-3 py-1.5 rounded-full;
+  }
+  .badge-orange {
+    @apply badge bg-brand-orange/10 text-brand-orange;
+  }
+  .badge-navy {
+    @apply badge bg-brand-navy/10 text-brand-navy;
+  }
+  .badge-white {
+    @apply badge bg-white/15 text-white backdrop-blur-sm;
+  }
+
+  /* Stat block */
+  .stat-block {
+    @apply flex flex-col gap-1;
+  }
+  .stat-number {
+    @apply text-display-md font-display font-black text-brand-navy leading-none;
+  }
+  .stat-label {
+    @apply text-sm font-sans text-text-muted;
+  }
+
+  /* Divider with optional label */
+  .divider {
+    @apply flex items-center gap-4 text-text-subtle text-sm;
+  }
+  .divider::before,
+  .divider::after {
+    content: '';
+    @apply flex-1 h-px bg-gray-200;
+  }
+
+  /* Nav link */
+  .nav-link {
+    @apply font-sans font-medium text-gray-600 hover:text-brand-navy
+           relative transition-colors duration-200
+           after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5
+           after:bg-brand-orange after:transition-all after:duration-200
+           hover:after:w-full;
+  }
+
+  /* Form input */
+  .form-input {
+    @apply w-full bg-white border border-gray-200 rounded-2xl
+           px-4 py-3.5 text-gray-900 font-sans text-base
+           placeholder:text-text-subtle
+           focus:outline-none focus:ring-2 focus:ring-brand-orange/30
+           focus:border-brand-orange
+           transition-all duration-200;
+  }
+
+  .form-label {
+    @apply block text-sm font-sans font-semibold text-gray-700 mb-1.5;
+  }
+
+  /* Service icon container */
+  .icon-container {
+    @apply w-14 h-14 rounded-2xl flex items-center justify-center
+           bg-brand-navy/5 text-brand-navy
+           transition-all duration-300;
+  }
+  .icon-container-accent {
+    @apply w-14 h-14 rounded-2xl flex items-center justify-center
+           bg-brand-orange text-white
+           shadow-cta;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   UTILITIES LAYER — One-off utility helpers
+───────────────────────────────────────────── */
+@layer utilities {
+
+  /* Text gradient */
+  .text-gradient-navy {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #1A1F71 0%, #252B8A 50%, #FF6B35 100%);
+  }
+  .text-gradient-orange {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #FF6B35, #FF8055);
+  }
+
+  /* Noise texture overlay */
+  .noise-overlay {
+    position: relative;
+  }
+  .noise-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    border-radius: inherit;
+  }
+
+  /* Glass morphism */
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+  .glass-dark {
+    @apply bg-brand-navy/80 backdrop-blur-md border border-brand-navy-light/30;
+  }
+
+  /* Grid dot pattern */
+  .bg-dot-pattern {
+    background-image: radial-gradient(circle, rgba(26,31,113,0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Stripe pattern */
+  .bg-stripe-pattern {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 4px,
+      rgba(26,31,113,0.03) 4px,
+      rgba(26,31,113,0.03) 8px
+    );
+  }
+
+  /* Clip path shapes */
+  .clip-diagonal {
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+  }
+  .clip-diagonal-reverse {
+    clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 100%);
+  }
+
+  /* Animate delay utilities */
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+  .animation-delay-700 { animation-delay: 700ms; }
+
+  /* Stagger children fade */
+  .stagger-children > * {
+    @apply opacity-0 animate-fade-up;
+  }
+  .stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+  .stagger-children > *:nth-child(2) { animation-delay: 100ms; }
+  .stagger-children > *:nth-child(3) { animation-delay: 200ms; }
+  .stagger-children > *:nth-child(4) { animation-delay: 300ms; }
+  .stagger-children > *:nth-child(5) { animation-delay: 400ms; }
+  .stagger-children > *:nth-child(6) { animation-delay: 500ms; }
+
+  /* Glow effects */
+  .glow-orange {
+    box-shadow: 0 0 40px rgba(255, 107, 53, 0.25), 0 0 80px rgba(255, 107, 53, 0.1);
+  }
+  .glow-navy {
+    box-shadow: 0 0 40px rgba(26, 31, 113, 0.2), 0 0 80px rgba(26, 31, 113, 0.08);
+  }
+
+  /* Aspect ratios */
+  .aspect-hero { aspect-ratio: 16/9; }
+  .aspect-card { aspect-ratio: 4/3; }
+  .aspect-portrait { aspect-ratio: 3/4; }
+
+  /* Safe area padding for mobile */
+  .safe-top { padding-top: env(safe-area-inset-top); }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+}
