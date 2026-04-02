@@ -1,12 +1,13 @@
 import HeroSection from "@/components/sections/HeroSection";
+import ServicesSection from "@/components/sections/ServicesSection";
 
 export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <ServicesSection />
 
-      {/* Placeholder anchors for navbar active-section detection */}
-      <div id="services" className="h-1" aria-hidden="true" />
+      {/* Placeholder anchors for upcoming sections */}
       <div id="fleet" className="h-1" aria-hidden="true" />
       <div id="about" className="h-1" aria-hidden="true" />
       <div id="testimonials" className="h-1" aria-hidden="true" />
@@ -14,8 +15,8 @@ export default function HomePage() {
 
       <section className="py-32 bg-white flex items-center justify-center">
         <p className="font-display font-bold text-2xl text-brand-navy/20 text-center px-4">
-          Services · Fleet · About · Testimonials · Contact<br/>
-          <span className="text-lg">— coming in Phases 4–7</span>
+          Fleet · About · Testimonials · Contact<br />
+          <span className="text-lg">— coming in Phases 5–7</span>
         </p>
       </section>
     </>
