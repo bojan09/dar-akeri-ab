@@ -318,3 +318,224 @@
   .safe-top { padding-top: env(safe-area-inset-top); }
   .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
 }
+
+/* ─────────────────────────────────────────────
+   PHASE 8 — ANIMATIONS & POLISH ADDITIONS
+───────────────────────────────────────────── */
+@layer base {
+  /* Respect user reduced-motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Smooth anchor scrolling offset for fixed navbar */
+  :target {
+    scroll-margin-top: 5rem;
+  }
+
+  /* Image rendering quality */
+  img {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+@layer components {
+  /* ── Shimmer loading skeleton ───────────────────── */
+  .skeleton {
+    @apply bg-gray-200 rounded-xl overflow-hidden relative;
+  }
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.6) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2.2s linear infinite;
+  }
+
+  /* ── Hover lift card (enhanced) ─────────────────── */
+  .card-lift {
+    @apply transition-all duration-300 ease-out-expo;
+  }
+  .card-lift:hover {
+    @apply -translate-y-2 shadow-card-hover;
+  }
+
+  /* ── Magnetic button effect ─────────────────────── */
+  .btn-magnetic {
+    @apply transition-transform duration-200 ease-out-expo;
+  }
+
+  /* ── Reveal on scroll (CSS-only fallback) ───────── */
+  .reveal {
+    @apply opacity-0 translate-y-6 transition-all duration-700 ease-out-expo;
+  }
+  .reveal.is-visible {
+    @apply opacity-100 translate-y-0;
+  }
+
+  /* ── Number ticker display ──────────────────────── */
+  .ticker {
+    @apply font-display font-black tabular-nums;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── Gradient text (animated) ───────────────────── */
+  .text-gradient-animated {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      270deg,
+      #FF6B35,
+      #1A1F71,
+      #252B8A,
+      #FF6B35
+    );
+    background-size: 300% 300%;
+    animation: gradientShift 6s ease infinite;
+  }
+
+  /* ── Underline grow effect ──────────────────────── */
+  .underline-grow {
+    @apply relative;
+  }
+  .underline-grow::after {
+    content: '';
+    @apply absolute bottom-0 left-0 h-0.5 w-0 bg-brand-orange rounded-full;
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .underline-grow:hover::after {
+    @apply w-full;
+  }
+
+  /* ── Focus ring enhanced ────────────────────────── */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 rounded-xl;
+  }
+
+  /* ── Frosted glass surface ──────────────────────── */
+  .frosted {
+    @apply bg-white/80 backdrop-blur-xl border border-white/60 shadow-card;
+  }
+
+  /* ── Pulse dot (live indicator) ─────────────────── */
+  .pulse-dot {
+    @apply w-2.5 h-2.5 rounded-full bg-emerald-400 relative;
+  }
+  .pulse-dot::before {
+    content: '';
+    @apply absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-75;
+  }
+
+  /* ── Section transition clip ────────────────────── */
+  .wave-bottom {
+    position: relative;
+  }
+  .wave-bottom::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: inherit;
+    clip-path: ellipse(55% 100% at 50% 0%);
+  }
+}
+
+@layer utilities {
+  /* ── Performance hints ──────────────────────────── */
+  .will-change-transform {
+    will-change: transform;
+  }
+  .will-change-opacity {
+    will-change: opacity;
+  }
+  .gpu {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* ── Gradient animation ─────────────────────────── */
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* ── Text balance for headings ──────────────────── */
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* ── Scrollbar hide ─────────────────────────────── */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ── Blur in/out ────────────────────────────────── */
+  .blur-in {
+    filter: blur(8px);
+    opacity: 0;
+    transition: filter 0.5s ease, opacity 0.5s ease;
+  }
+  .blur-in.loaded {
+    filter: blur(0);
+    opacity: 1;
+  }
+
+  /* ── Perspective for 3D hovers ──────────────────── */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .perspective-2000 {
+    perspective: 2000px;
+  }
+
+  /* ── Truncate multi-line ────────────────────────── */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ── Animation fill ─────────────────────────────── */
+  .animation-fill-both {
+    animation-fill-mode: both;
+  }
+  .animation-fill-forwards {
+    animation-fill-mode: forwards;
+  }
+
+  /* ── Hover group utilities ──────────────────────── */
+  .group-hover-lift {
+    @apply transition-transform duration-300 ease-out-expo group-hover:-translate-y-1;
+  }
+  .group-hover-orange {
+    @apply transition-colors duration-200 group-hover:text-brand-orange;
+  }
+}

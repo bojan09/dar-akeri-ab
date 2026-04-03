@@ -65,8 +65,18 @@ const config: Config = {
       animation: {
         "fade-up": "fadeUp 0.6s ease-out forwards",
         "fade-in": "fadeIn 0.4s ease-out forwards",
-        shimmer: "shimmer 2s linear infinite",
+        shimmer: "shimmer 2.2s linear infinite",
         float: "float 6s ease-in-out infinite",
+        "float-slow": "float 9s ease-in-out infinite",
+        "spin-slow": "spin 8s linear infinite",
+        "pulse-soft": "pulseSoft 3s ease-in-out infinite",
+        "slide-in-right": "slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "slide-in-left": "slideInLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "scale-in": "scaleIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "draw-line": "drawLine 0.6s ease-out forwards",
+        "count-up": "countUp 0.4s ease-out forwards",
+        "bounce-x": "bounceX 1.4s ease-in-out infinite",
+        "wiggle": "wiggle 0.4s ease-in-out",
       },
       keyframes: {
         fadeUp: {
@@ -82,13 +92,52 @@ const config: Config = {
           "100%": { backgroundPosition: "200% 0" },
         },
         float: {
-          "0%, 100%": { transform: "translateY(0)" },
+          "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-12px)" },
+        },
+        pulseSoft: {
+          "0%, 100%": { opacity: "1", transform: "scale(1)" },
+          "50%": { opacity: "0.7", transform: "scale(0.97)" },
+        },
+        slideInRight: {
+          from: { opacity: "0", transform: "translateX(20px)" },
+          to: { opacity: "1", transform: "translateX(0)" },
+        },
+        slideInLeft: {
+          from: { opacity: "0", transform: "translateX(-20px)" },
+          to: { opacity: "1", transform: "translateX(0)" },
+        },
+        scaleIn: {
+          from: { opacity: "0", transform: "scale(0.9)" },
+          to: { opacity: "1", transform: "scale(1)" },
+        },
+        drawLine: {
+          from: { width: "0%" },
+          to: { width: "100%" },
+        },
+        countUp: {
+          from: { opacity: "0", transform: "translateY(8px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        bounceX: {
+          "0%, 100%": { transform: "translateX(0)" },
+          "50%": { transform: "translateX(5px)" },
+        },
+        wiggle: {
+          "0%, 100%": { transform: "rotate(0deg)" },
+          "25%": { transform: "rotate(-3deg)" },
+          "75%": { transform: "rotate(3deg)" },
         },
       },
       transitionTimingFunction: {
         "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
         "in-out-expo": "cubic-bezier(0.87, 0, 0.13, 1)",
+        "out-back": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+      },
+      willChange: {
+        transform: "transform",
+        opacity: "opacity",
+        scroll: "scroll-position",
       },
     },
   },

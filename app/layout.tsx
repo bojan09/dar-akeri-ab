@@ -4,6 +4,9 @@ import "@/app/globals.css";
 import LocaleProvider from "@/components/layout/LocaleProvider";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import ScrollProgressBar from "@/components/layout/ScrollProgressBar";
+import ScrollToTop from "@/components/layout/ScrollToTop";
+import { MotionConfig } from "framer-motion";
 
 // ── Fonts ──────────────────────────────────────────────────
 const barlowCondensed = Barlow_Condensed({
@@ -129,13 +132,17 @@ export default function RootLayout({
           Skip to main content
         </a>
 
+        <MotionConfig reducedMotion="user">
         <LocaleProvider>
+          <ScrollProgressBar />
+          <ScrollToTop />
           <Navbar />
           <main id="main-content" className="flex flex-col flex-1" role="main">
             {children}
           </main>
           <Footer />
         </LocaleProvider>
+        </MotionConfig>
       </body>
     </html>
   );

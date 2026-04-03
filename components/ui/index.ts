@@ -5,3 +5,4 @@ export { default as SectionHeader } from "./SectionHeader";
 export { default as Badge } from "./Badge";
 
 export type { ButtonProps, ButtonVariant, ButtonSize } from "./Button";
+export { default as SectionDivider } from "./SectionDivider";
