@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { useLocale } from "@/hooks/useLocale";
 import { scrollToSection } from "@/lib/utils";
 import Button from "@/components/ui/Button";
+import LanguageToggle from "@/components/ui/LanguageToggle";
 import {
   Menu,
   X,
@@ -29,7 +30,7 @@ const NAV_ITEMS: NavItem[] = [
 
 // ── Component ─────────────────────────────────────────────
 export default function Navbar() {
-  const { t, locale, toggleLocale } = useLocale();
+  const { t } = useLocale();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
@@ -157,44 +158,11 @@ export default function Navbar() {
 
             {/* ── Desktop Actions ───────────────────────── */}
             <div className="hidden lg:flex items-center gap-3">
-              {/* Language Toggle */}
-              <button
-                onClick={toggleLocale}
-                className={cn(
-                  "flex items-center gap-1.5 px-3 py-1.5 rounded-xl",
-                  "font-sans font-semibold text-sm uppercase tracking-wider",
-                  "transition-all duration-200",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange",
-                  isScrolled
-                    ? "text-gray-500 hover:text-brand-navy hover:bg-brand-navy/5"
-                    : "text-white/70 hover:text-white hover:bg-white/10"
-                )}
-                aria-label={`Switch to ${locale === "en" ? "Swedish" : "English"}`}
-              >
-                <span
-                  className={cn(
-                    "px-1.5 py-0.5 rounded text-xs font-bold",
-                    locale === "en"
-                      ? "bg-brand-orange text-white"
-                      : isScrolled ? "text-gray-400" : "text-white/50"
-                  )}
-                >
-                  EN
-                </span>
-                <span className={isScrolled ? "text-gray-300" : "text-white/30"}>
-                  /
-                </span>
-                <span
-                  className={cn(
-                    "px-1.5 py-0.5 rounded text-xs font-bold",
-                    locale === "sv"
-                      ? "bg-brand-orange text-white"
-                      : isScrolled ? "text-gray-400" : "text-white/50"
-                  )}
-                >
-                  SV
-                </span>
-              </button>
+              {/* Language Toggle — animated pill */}
+              <LanguageToggle
+                variant="pill"
+                theme={isScrolled ? "light" : "dark"}
+              />
 
               {/* Phone quick-link */}
               <a
@@ -222,19 +190,11 @@ export default function Navbar() {
 
             {/* ── Mobile: Lang + Hamburger ──────────────── */}
             <div className="flex lg:hidden items-center gap-2">
-              <button
-                onClick={toggleLocale}
-                className={cn(
-                  "font-sans font-bold text-xs uppercase tracking-wider px-2.5 py-1.5 rounded-lg",
-                  "transition-colors duration-200",
-                  isScrolled
-                    ? "text-brand-navy bg-brand-navy/5"
-                    : "text-white bg-white/15"
-                )}
-                aria-label={`Switch language to ${locale === "en" ? "SV" : "EN"}`}
-              >
-                {locale === "en" ? "SV" : "EN"}
-              </button>
+              {/* Language Toggle — mobile */}
+              <LanguageToggle
+                variant="pill"
+                theme={isScrolled ? "light" : "dark"}
+              />
 
               <button
                 onClick={() => setMobileOpen((v) => !v)}

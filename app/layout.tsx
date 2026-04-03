@@ -7,6 +7,7 @@ import Footer from "@/components/layout/Footer";
 import ScrollProgressBar from "@/components/layout/ScrollProgressBar";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import { MotionConfig } from "framer-motion";
+import StructuredData from "@/components/layout/StructuredData";
 
 // ── Fonts ──────────────────────────────────────────────────
 const barlowCondensed = Barlow_Condensed({
@@ -124,6 +125,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen flex flex-col antialiased">
+        <StructuredData />
         {/* Skip to main content — accessibility */}
         <a
           href="#main-content"

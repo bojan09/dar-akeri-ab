@@ -6,3 +6,4 @@ export { default as Badge } from "./Badge";
 
 export type { ButtonProps, ButtonVariant, ButtonSize } from "./Button";
 export { default as SectionDivider } from "./SectionDivider";
+export { default as LanguageToggle } from "./LanguageToggle";

@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale } from "@/hooks/useLocale";
+import LanguageToggle from "@/components/ui/LanguageToggle";
 import { scrollToSection } from "@/lib/utils";
 import {
   Truck,
@@ -237,6 +238,7 @@ export default function Footer() {
             <p className="font-sans text-xs text-white/40 text-center sm:text-left">
               © {currentYear} {t.footer.copyright}
             </p>
+            <LanguageToggle variant="pill" theme="dark" />
             <nav aria-label="Legal links">
               <ul className="flex items-center gap-1">
                 {t.footer.links.map((link, i) => (

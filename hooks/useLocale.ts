@@ -1,45 +1,36 @@
 "use client";
 
-import { useState, useCallback, createContext, useContext } from "react";
-import type { Locale, TranslationSchema } from "@/lib/i18n";
-import { getTranslation, DEFAULT_LOCALE } from "@/lib/i18n";
+// Re-export from LocaleProvider so either import path works
+export { LocaleContext, useLocale } from "@/components/layout/LocaleProvider";
 
-// ── Context ───────────────────────────────────────────────
-interface LocaleContextValue {
-  locale: Locale;
-  t: TranslationSchema;
-  setLocale: (locale: Locale) => void;
-  toggleLocale: () => void;
-}
+import { useState, useCallback } from "react";
+import type { Locale } from "@/lib/i18n";
+import { getTranslation, DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@/lib/i18n";
 
-export const LocaleContext = createContext<LocaleContextValue>({
-  locale: DEFAULT_LOCALE,
-  t: getTranslation(DEFAULT_LOCALE),
-  setLocale: () => {},
-  toggleLocale: () => {},
-});
-
-// ── Hook ─────────────────────────────────────────────────
-export function useLocale() {
-  return useContext(LocaleContext);
-}
-
-// ── Hook for standalone use (without context) ─────────────
+// ── Standalone hook (outside context) ────────────────────
+// Use this in isolated components / tests that don't have LocaleProvider above them
 export function useLocaleState(initial: Locale = DEFAULT_LOCALE) {
   const [locale, setLocaleState] = useState<Locale>(initial);
 
   const setLocale = useCallback((next: Locale) => {
+    if (!SUPPORTED_LOCALES.includes(next)) return;
     setLocaleState(next);
     if (typeof document !== "undefined") {
       document.documentElement.lang = next;
     }
+    try {
+      localStorage.setItem("dar-akeri-locale", next);
+    } catch { /* silent */ }
   }, []);
 
   const toggleLocale = useCallback(() => {
     setLocale(locale === "en" ? "sv" : "en");
   }, [locale, setLocale]);
 
-  const t = getTranslation(locale);
-
-  return { locale, t, setLocale, toggleLocale };
+  return {
+    locale,
+    t: getTranslation(locale),
+    setLocale,
+    toggleLocale,
+  };
 }
