@@ -1,12 +1,16 @@
 "use client";
 
 import { useRef } from "react";
-import { useInView, Variants } from "framer-motion";
+import { useInView, Variants, type UseInViewOptions } from "framer-motion";
 
 // ── Shared easing curves ───────────────────────────────────
 export const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
 export const EASE_IN_OUT = [0.87, 0, 0.13, 1] as const;
-export const EASE_SPRING = { type: "spring", stiffness: 300, damping: 24 } as const;
+export const EASE_SPRING = {
+  type: "spring",
+  stiffness: 300,
+  damping: 24,
+} as const;
 
 // ── Reusable variant factories ────────────────────────────
 export const fadeUpVariants = (delay = 0, distance = 28): Variants => ({
@@ -72,7 +76,7 @@ export const staggerItemVariants: Variants = {
 // ── Hook ──────────────────────────────────────────────────
 interface UseScrollAnimationOptions {
   once?: boolean;
-  margin?: string;
+  margin?: UseInViewOptions["margin"];
   amount?: number | "some" | "all";
 }
 
@@ -92,7 +96,7 @@ export function useScrollAnimation({
 export function buildSequence(
   items: number,
   baseDelay = 0,
-  step = 0.08
+  step = 0.08,
 ): number[] {
   return Array.from({ length: items }, (_, i) => baseDelay + i * step);
 }
